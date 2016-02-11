@@ -17,7 +17,7 @@ class accounts(
 
   notice($groups)
 
-  #  create_resources(group, $groups)
+  create_resources(group, $groups)
 
   #  create_resources(accounts::account, $accounts)
 
