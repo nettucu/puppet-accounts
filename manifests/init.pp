@@ -15,13 +15,15 @@ class accounts(
 ) {
   include ::accounts::config
 
-  create_resources(group, $groups)
+  notice($groups)
 
-  create_resources(accounts::account, $accounts)
+  #  create_resources(group, $groups)
+
+  #  create_resources(accounts::account, $accounts)
 
   # Remove users marked as absent
-  $absent_users = keys(absents($users))
-  user { $absent_users:
-    ensure => absent,
-  }
+  #  $absent_users = keys(absents($users))
+  #  user { $absent_users:
+  #    ensure => absent,
+  #  }
 }
