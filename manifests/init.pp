@@ -17,13 +17,13 @@ class accounts(
 
   notice($groups)
 
-  create_resources('group', $groups)
+  create_resources(group, $groups)
 
-  #  create_resources(accounts::account, $accounts)
+  create_resources(accounts::account, $accounts)
 
-  # Remove users marked as absent
-  #  $absent_users = keys(absents($users))
-  #  user { $absent_users:
-  #    ensure => absent,
-  #  }
+  #Remove users marked as absent
+  $absent_users = keys(absents($users))
+  user { $absent_users:
+    ensure => absent,
+  }
 }
