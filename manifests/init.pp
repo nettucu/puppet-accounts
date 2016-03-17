@@ -15,8 +15,6 @@ class accounts(
 ) {
   include ::accounts::config
 
-  notice($groups)
-
   create_resources(group, $groups)
 
   create_resources(accounts::account, $accounts)
