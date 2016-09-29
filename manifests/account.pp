@@ -48,8 +48,11 @@ define accounts::account(
         $_purge_ssh_keys = $purge_ssh_keys
       }
       $_home = $home ? {
-        undef   => "/home/${$user}",
-        default => $home,
+        undef       => $::osfamily ? {
+          solaris   => "'localhost:/home/export/${$user}'",
+          default   => "/home/${$user}",
+        },
+        default     => $home,
       }
 
       $hash = merge(
