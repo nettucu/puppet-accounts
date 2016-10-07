@@ -49,7 +49,7 @@ define accounts::account(
       }
       $_home = $home ? {
         undef       => $::osfamily ? {
-          solaris   => "'localhost:/home/export/${$user}'",
+          solaris   => "localhost:/export/home/&",
           default   => "/home/${$user}",
         },
         default     => $home,
