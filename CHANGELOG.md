@@ -1,3 +1,24 @@
+## 2017-05-22 - Release 1.9.3
+
+Really fix automated release system...
+
+## 2017-05-22 - Release 1.9.2
+
+Fix automated release system
+
+## 2017-01-10 - Release 1.9.0
+
+Remove Puppet 3 support
+Fix ParseError test
+
+## 2016-06-20 - Release 1.8.1
+
+Update test files
+
+## 2016-02-18 - Release 1.8.0
+
+Parameterize managehome (issue #21)
+
 ## 2015-11-12 - Release 1.7.0
 
 Allow to set options to ssh_authorized_key
