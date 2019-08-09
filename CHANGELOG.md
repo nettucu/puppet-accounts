@@ -1,3 +1,27 @@
+## 2019-07-30 - Release 1.11.1
+
+- Allow augeasproviders_shellvar 4
+
+## 2019-07-30 - Release 1.11.0
+
+- Add system option to accounts::account (#60)
+- Fix beaker version
+- Do not use legacy puppet-lint-absolute_classname-check plugin
+- Pass through managehome on absent (#62) (fix #61)
+- strformat function: use loop instead of recursion (#64)
+- Allow ssh_options for accounts being created through accounts::usergroups as well (#66) 
+- Merge group arrays instead of rightmost precedence (#65)
+- Add expiry parameter (#55)
+- Add additional prerequisite (#53)
+- Allow augeasproviders_shellvar 3.x
+- Fix puppet error if the account is not yet created (#41)
+- Allow stdlib 5 & 6
+- Fix tests on Puppet 6
+
+## 2018-01-03 - Release 1.10.0
+
+Remove absent keys when user resource not managed by module
+
 ## 2017-05-22 - Release 1.9.3
 
 Really fix automated release system...

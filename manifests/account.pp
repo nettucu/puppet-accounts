@@ -3,6 +3,7 @@ define accounts::account(
   $ensure                   = present,
   $comment                  = undef,
   $user                     = $name,
+  $expiry                   = undef,
   $groups                   = [],
   $groups_membership        = $::accounts::groups_membership,
   $authorized_keys          = [],
@@ -16,6 +17,7 @@ define accounts::account(
   $password                 = undef,
   $uid                      = undef,
   $gid                      = undef,
+  $system                   = undef,
   $ssh_options              = undef,
 ) {
   $account = $user # for strformat mapping...
@@ -40,6 +42,8 @@ define accounts::account(
         password                 => $password,
         uid                      => $uid,
         gid                      => $gid,
+        ssh_options              => $ssh_options,
+        system                   => $system,
       }
     )
   } else {
@@ -61,7 +65,6 @@ define accounts::account(
         {
           ensure     => $ensure,
           comment    => $comment,
-          groups     => $groups,
           home       => $_home,
           password   => $password,
           managehome => $managehome,
@@ -70,8 +73,11 @@ define accounts::account(
           shell      => $shell,
           uid        => $uid,
           gid        => $gid,
+          expiry     => $expiry,
+          system     => $system,
         },
-        $::accounts::users[$name]
+        $::accounts::users[$name],
+        { groups => $groups.concat($::accounts::users[$name][groups].pick([])).flatten.unique }
       )
 
       if versioncmp($::puppetversion, '3.6.0') >= 0 {
@@ -139,11 +145,12 @@ define accounts::account(
         exec { "put ssh private key ${name} for user ${user}":
           command => "/bin/echo '${::accounts::ssh_keys[$name]['private']}' > ~${user}/.ssh/id_rsa; /bin/chown ${user} ~${user}/.ssh/id_rsa; /bin/chmod 600 ~${user}/.ssh/id_rsa",
           unless  => "/usr/bin/test -f ~${user}/.ssh/id_rsa",
+          onlyif  => "/usr/bin/test -d ~${user}/.ssh",
         }
       }
     }
 
-    if ! $purge_ssh_keys {
+    if ! $purge_ssh_keys or ! has_key($::accounts::users, $user) {
       $keys_to_remove = suffix(keys(absents($::accounts::ssh_keys)), "-on-${name}")
       accounts::authorized_key { $keys_to_remove:
         ensure                   => absent,
